@@ -1,0 +1,205 @@
+"'Feedback Screen' As screen":
+
+    Label15_3 As label:
+        Fill: =RGBA(22, 125, 134, 1)
+        Height: =125
+        Text: =""
+        Width: =1366
+        ZIndex: =1
+
+    Label2_3 As label:
+        Color: =RGBA(56, 96, 178, 1)
+        Height: =91
+        Size: =60
+        Text: ="Boost your daily work"
+        Width: =1024
+        X: =215
+        Y: =12
+        ZIndex: =2
+
+    Image3_3 As image:
+        Height: =115
+        Image: =DBschenker
+        Width: =170
+        Y: =7
+        ZIndex: =3
+
+    Label6_9 As label:
+        Align: =Align.Center
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(215, 223, 240, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =65
+        HoverColor: =RGBA(136, 160, 209, 1)
+        HoverFill: =RGBA(241, 244, 249, 1)
+        Size: =20
+        Text: ="Training room"
+        Width: =215
+        Y: =130
+        ZIndex: =4
+
+    Button3_20 As button:
+        BorderColor: =RGBA(56, 96, 178, 1)
+        BorderStyle: =BorderStyle.None
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Microsoft 365 Screen')
+        Size: =12
+        Text: ="Microsoft 365 Trainings"
+        Width: =200
+        X: =15
+        Y: =195
+        ZIndex: =5
+
+    Button3_22 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Agility Screen')
+        Size: =12
+        Text: ="Agility Trainings "
+        Width: =200
+        X: =15
+        Y: =279
+        ZIndex: =7
+
+    Button3_23 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Power Platform Screen')
+        Size: =12
+        Text: ="Power Platform  Trainings  "
+        Width: =200
+        X: =15
+        Y: =237
+        ZIndex: =8
+
+    Label6_10 As label:
+        Align: =Align.Center
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(215, 223, 240, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =65
+        Size: =20
+        Text: ="My Trainings"
+        Width: =215
+        Y: =372
+        ZIndex: =9
+
+    Button3_24 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate ('My Trainings Screen (Attendee)')
+        Size: =12
+        Text: ="Attendee"
+        Width: =200
+        X: =15
+        Y: =437
+        ZIndex: =10
+
+    ButtonAdmin_2 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Admin Screen')
+        Size: =12
+        Text: ="Admin"
+        Visible: |-
+            =If(
+            
+             Not(IsBlank(LookUp(Boost_App_Admin, User().Email in Admin_Email))),
+            
+            true,
+            
+            false
+            
+            )
+        Width: =200
+        X: =15
+        Y: =521
+        ZIndex: =11
+
+    ButtonTrainer_2 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('New Training Screen (Trainer)')
+        Size: =12
+        Text: ="Trainer"
+        Visible: |-
+            =If(
+            
+            Not(IsBlank(LookUp(Boost_App_Trainer, User().Email in Trainer_Email)) 
+            ) ||  Not(IsBlank(LookUp(Boost_App_Admin, User().Email in Admin_Email))),
+            
+            true,
+            
+            false
+            
+            )
+        Width: =200
+        X: =15
+        Y: =479
+        ZIndex: =12
+
+    Label6_11 As label:
+        Align: =Align.Center
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(215, 223, 240, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =65
+        Size: =20
+        Text: ="Contact"
+        Width: =215
+        Y: =570
+        ZIndex: =13
+
+    Button3_25 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        OnSelect: =Navigate('Feedback Screen')
+        Size: =12
+        Text: ="Feedback"
+        Width: =200
+        X: =15
+        Y: =635
+        ZIndex: =14
+
+    Label8 As label:
+        Color: =RGBA(255, 191, 0, 1)
+        Height: =43
+        Size: =20
+        Text: ="Select the topic of your message"
+        Width: =421
+        X: =242
+        Y: =169
+        ZIndex: =15
+
+    Radio2 As radio:
+        Default: ="I want to propose a training"
+        Height: =206
+        Items: =["I want to propose a training", "Issues with the BoostApp", "I want to be a Trainer", "Other topic"]
+        Width: =384
+        X: =261
+        Y: =220
+        ZIndex: =16
+
+    TextInput2 As text:
+        Default: =""
+        Height: =310
+        HintText: ="Please nput your message here"
+        Mode: =TextMode.MultiLine
+        Width: =612
+        X: =676
+        Y: =231
+        ZIndex: =17
+
+    Button2 As button:
+        Height: =41
+        OnSelect: |
+            =Office365Outlook.SendEmailV2(
+                Concat(Boost_App_Admin,Admin_Email,";"),Radio2.Selected.Value,TextInput2.Text,{From:User().Email}
+            )
+        Text: ="send contact email!"
+        Width: =357
+        X: =940
+        Y: =595
+        ZIndex: =18
+

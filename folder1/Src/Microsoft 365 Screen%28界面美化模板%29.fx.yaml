@@ -1,0 +1,674 @@
+"'Microsoft 365 Screen(界面美化模板)' As screen":
+    Fill: =
+
+    Label21_1 As label:
+        BorderColor: =RGBA(22, 125, 134, 0.01)
+        Color: =RGBA(22, 0, 0, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =130
+        Text: =""
+        Width: =1151
+        X: =215
+        Y: =125
+        ZIndex: =2
+
+    Label3_5 As label:
+        Fill: =RGBA(22, 125, 134, 1)
+        Text: =""
+        Width: =1151
+        X: =215
+        Y: =250
+        ZIndex: =3
+
+    Label17_12 As label:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(219, 219, 219, 1)
+        Height: =643
+        Text: =""
+        Width: =215
+        Y: =125
+        ZIndex: =4
+
+    Label15_14 As label:
+        Fill: =RGBA(22, 125, 134, 1)
+        Height: =125
+        Text: =""
+        Width: =1366
+        ZIndex: =5
+
+    TextInput1_4 As text:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Default: =""
+        Height: =45
+        HintText: ="Search by Course Name"
+        Width: =220
+        X: =1095
+        Y: =183
+        ZIndex: =6
+
+    "Gallery2_5 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+        '#CopilotOverlayLabel': ="Filtered"
+        BorderColor: =RGBA(22, 134, 125, 1)
+        DelayItemLoading: =true
+        Height: =468
+        Items: |-
+            =
+            Sort(
+                Filter(Boost_App_Course,
+            
+                Topic = ComboBox5_1.Selected.Topic||IsBlank(ComboBox5_1.Selected.Topic),
+            
+                Level = ComboBox3_5.Selected.Value || IsBlank(ComboBox3_5.Selected.Value),
+            
+                Language = ComboBox1_2.Selected.Value ||IsBlank(ComboBox1_2.Selected.Value),
+            
+                TextInput1_4.Text in course_name || IsBlank(TextInput1_4.Text),
+            
+                Category = "Microsoft 365"
+            
+                ),
+                Open_Date,SortOrder.Descending)
+            
+            
+            
+            //根据TOPIC,LEVEL,LANGUAGE三个DROPDOWN中不同的选择以及Search Bar中不同的输入内容，对于Boost_App_Course 进行筛选并按照开课日期进行排序，倒序时间排序 筛选列如果是BLANK，则跳过
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplatePadding: =0
+        TemplateSize: =80
+        Width: =1150
+        X: =216
+        Y: =290
+        ZIndex: =7
+
+        Image2_5 As image:
+            Fill: =Color.White
+            Height: =72
+            Image: |-
+                =Switch( ThisItem.Category,"Microsoft 365",'Microsoft 365',Switch(ThisItem.Category,"Power Platform", 'Power Platform',Switch(ThisItem.Category,"Agility",agility_logo,DBschenker)))
+                
+                //根据不同的CATEGORY显示不同的图片
+            OnSelect: =Select(Parent)
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Width: =72
+            X: =11
+            Y: =2
+            ZIndex: =1
+
+        Subtitle2_4 As label:
+            Color: =If(ThisItem.Open_Date<Today(),RGBA(219, 219, 219, 1),RGBA(22, 125, 134, 1))
+            FontWeight: =FontWeight.Bold
+            Height: =46
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =14
+            Text: =ThisItem.Topic
+            Width: =196
+            X: =129
+            Y: =11
+            ZIndex: =3
+
+        Separator1_5 As rectangle:
+            Height: =8
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - Self.Height
+            ZIndex: =5
+
+        Label16_5 As label:
+            Color: =If(ThisItem.Open_Date<Today(),RGBA(219, 219, 219, 1),RGBA(22, 125, 134, 1))
+            FontWeight: =FontWeight.Bold
+            Height: =36
+            OnSelect: =Select(Parent)
+            Size: =14
+            Text: =ThisItem.course_name
+            VerticalAlign: =VerticalAlign.Top
+            Width: =270
+            X: =354
+            Y: =17
+            ZIndex: =7
+
+        Label18_5 As label:
+            Align: =Align.Center
+            Color: =If(ThisItem.Open_Date<Today(),RGBA(219, 219, 219, 1),RGBA(22, 125, 134, 1))
+            FontWeight: =FontWeight.Bold
+            Height: =38
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.Duration
+            Width: =65
+            X: =644
+            Y: =15
+            ZIndex: =8
+
+        Label19_5 As label:
+            Align: =Align.Center
+            Color: =If(ThisItem.Open_Date<Today(),RGBA(219, 219, 219, 1),RGBA(22, 125, 134, 1))
+            FontWeight: =FontWeight.Bold
+            Height: =43
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.Level
+            Width: =95
+            X: =738
+            Y: =12
+            ZIndex: =9
+
+        Icon1_31 As icon.VerticalLine:
+            BorderStyle: =BorderStyle.None
+            DisplayMode: =DisplayMode.Disabled
+            FocusedBorderThickness: =1
+            Height: =80
+            Icon: =Icon.VerticalLine
+            OnSelect: =Select(Parent)
+            X: =311
+            ZIndex: =10
+
+        Icon1_32 As icon.VerticalLine:
+            BorderStyle: =BorderStyle.None
+            DisplayMode: =DisplayMode.Disabled
+            FocusedBorderThickness: =1
+            Height: =80
+            Icon: =Icon.VerticalLine
+            OnSelect: =Select(Parent)
+            X: =596
+            ZIndex: =13
+
+        Icon1_33 As icon.VerticalLine:
+            BorderStyle: =BorderStyle.None
+            DisplayMode: =DisplayMode.Disabled
+            FocusedBorderThickness: =1
+            Height: =80
+            Icon: =Icon.VerticalLine
+            OnSelect: =Select(Parent)
+            X: =697
+            ZIndex: =14
+
+        Icon1_29 As icon.VerticalLine:
+            BorderStyle: =BorderStyle.None
+            DisplayMode: =DisplayMode.Disabled
+            FocusedBorderThickness: =1
+            Height: =80
+            Icon: =
+            OnSelect: =Select(Parent)
+            X: =58
+            ZIndex: =15
+
+        Icon1_34 As icon.VerticalLine:
+            BorderStyle: =BorderStyle.None
+            DisplayMode: =DisplayMode.Disabled
+            FocusedBorderThickness: =1
+            Height: =80
+            Icon: =Icon.VerticalLine
+            OnSelect: =Select(Parent)
+            X: =814
+            ZIndex: =16
+
+        Button5_9 As button:
+            BorderColor: =If(ThisItem.Open_Date<Today(),ColorFade(Self.Fill, -15%),ColorFade(RGBA(22, 125, 134, 1), -20%))
+            Color: =If(ThisItem.Open_Date<Today(),RGBA(219, 219, 219, 1),RGBA(22, 125, 134, 1))
+            Fill: =RGBA(237, 237, 237, 1)
+            Height: =52
+            HoverFill: =If(ThisItem.Open_Date<Today(),ColorFade(RGBA(255, 255, 255, 1), -20%),ColorFade(RGBA(22, 125, 134, 1), -20%))
+            OnSelect: |
+                =Set(topicid,Gallery2_5.Selected.ID) ; Navigate('Course Detail Screen',ScreenTransition.CoverRight)
+            Text: ="More Details"
+            Width: =121
+            X: =988
+            Y: =11
+            ZIndex: =17
+
+        Label13_2 As label:
+            Color: =If(ThisItem.Open_Date<Today(),RGBA(219, 219, 219, 1),RGBA(22, 125, 134, 1))
+            FontWeight: =FontWeight.Bold
+            Height: =47
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.Open_Date
+            Width: =103
+            X: =856
+            Y: =10
+            ZIndex: =18
+
+        Icon1_35 As icon.VerticalLine:
+            BorderStyle: =BorderStyle.None
+            DisplayMode: =DisplayMode.Disabled
+            FocusedBorderThickness: =1
+            Height: =80
+            Icon: =Icon.VerticalLine
+            OnSelect: =Select(Parent)
+            X: =924
+            ZIndex: =19
+
+        Icon1_30 As icon.VerticalLine:
+            BorderStyle: =BorderStyle.None
+            DisplayMode: =DisplayMode.Disabled
+            FocusedBorderThickness: =1
+            Height: =80
+            Icon: =Icon.VerticalLine
+            OnSelect: =Select(Parent)
+            X: =71
+            ZIndex: =20
+
+        Icon4_9 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =129
+            X: =3
+            Y: =67
+            ZIndex: =21
+
+        Icon4_10 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =129
+            X: =123
+            Y: =67
+            ZIndex: =22
+
+        Icon4_11 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =129
+            X: =248
+            Y: =67
+            ZIndex: =23
+
+        Icon4_12 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =129
+            X: =371
+            Y: =67
+            ZIndex: =24
+
+        Icon4_13 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =132
+            X: =495
+            Y: =67
+            ZIndex: =25
+
+        Icon4_14 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =129
+            X: =628
+            Y: =67
+            ZIndex: =26
+
+        Icon4_15 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =129
+            X: =757
+            Y: =67
+            ZIndex: =27
+
+        Icon4_16 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =129
+            X: =886
+            Y: =67
+            ZIndex: =28
+
+        Icon4_17 As icon.HorizontalLine:
+            Color: =RGBA(237, 237, 237, 1)
+            Height: =13
+            Icon: =Icon.HorizontalLine
+            OnSelect: =Select(Parent)
+            Width: =135
+            X: =998
+            Y: =67
+            ZIndex: =29
+
+    Label2_14 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =109
+        Size: =50
+        Text: ="Boost your daily work"
+        Width: =1024
+        X: =197
+        Y: =6
+        ZIndex: =8
+
+    Label6_39 As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Color: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(22, 125, 134, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =70
+        Size: =20
+        Text: ="Training Room"
+        Width: =214
+        X: =2
+        Y: =135
+        ZIndex: =9
+
+    Image4_12 As image:
+        Height: =50
+        Image: =DBschenker
+        Width: =186
+        X: =1180
+        ZIndex: =10
+
+    ComboBox1_2 As combobox:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        ChevronBackground: =RGBA(22, 125, 134, 1)
+        DisplayFields: =["Value"]
+        Height: =45
+        InputTextPlaceholder: ="Select Language"
+        Items: =["English","Chinese","German","Spanish","Others"]
+        SearchFields: =["Value"]
+        SearchItems: =Search(["English","Chinese","German","Spanish","Others"],ComboBox1_2.SearchText,Value)
+        Width: =220
+        X: =829
+        Y: =183
+        ZIndex: =11
+
+    Button3_1 As button:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(22, 125, 134, 1)
+        Height: =42
+        HoverFill: =ColorFade(RGBA(22, 125, 134, 1), -20%)
+        OnSelect: =Navigate('Microsoft 365 Screen(界面美化模板)')
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Size: =12
+        Text: ="Microsoft 365 Trainings"
+        Width: =200
+        X: =15
+        Y: =213
+        ZIndex: =12
+
+    Button3_17 As button:
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        Height: =42
+        HoverFill: =ColorFade(RGBA(22, 125, 134, 1), -20%)
+        OnSelect: =Navigate('Agility Screen')
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Size: =12
+        Text: ="Agility Trainings "
+        Width: =200
+        X: =16
+        Y: =304
+        ZIndex: =13
+
+    Button3_11 As button:
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        Height: =42
+        HoverFill: =ColorFade(RGBA(22, 125, 134, 1), -20%)
+        OnSelect: =Navigate('Power Platform Screen')
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Size: =12
+        Text: ="Power Platform  Trainings  "
+        Width: =200
+        X: =15
+        Y: =260
+        ZIndex: =14
+
+    Label6_40 As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(227, 234, 243, 1)
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =55
+        Size: =20
+        Text: ="My Trainings"
+        Width: =215
+        Y: =382
+        ZIndex: =15
+
+    Button3_21 As button:
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        HoverFill: =ColorFade(RGBA(22, 125, 134, 1), -20%)
+        OnSelect: =Navigate ('My Trainings Screen (Attendee)')
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Size: =12
+        Text: ="Attendee"
+        Width: =200
+        X: =15
+        Y: =439
+        ZIndex: =16
+
+    ButtonAdmin_5 As button:
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        HoverFill: =ColorFade(RGBA(22, 125, 134, 1), -20%)
+        OnSelect: =Navigate('Admin Screen')
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Size: =12
+        Text: ="Admin"
+        Visible: |-
+            =If(
+            
+             Not(IsBlank(LookUp(Boost_App_Admin, User().Email in Admin_Email))),
+            
+            true,
+            
+            false
+            
+            )
+        Width: =200
+        X: =15
+        Y: =523
+        ZIndex: =17
+
+    ButtonTrainer_5 As button:
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        HoverFill: =ColorFade(RGBA(22, 125, 134, 1), -20%)
+        OnSelect: =Navigate('New Training Screen (Trainer)')
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Size: =12
+        Text: ="Trainer"
+        Visible: |-
+            =If(
+            
+            Not(IsBlank(LookUp(Boost_App_Trainer, User().Email in Trainer_Email)) 
+            ) ||  Not(IsBlank(LookUp(Boost_App_Admin, User().Email in Admin_Email))),
+            
+            true,
+            
+            false
+            
+            )
+        Width: =200
+        X: =15
+        Y: =481
+        ZIndex: =18
+
+    Label6_41 As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(227, 234, 243, 1)
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =65
+        Size: =20
+        Text: ="Contact"
+        Width: =215
+        Y: =600
+        ZIndex: =19
+
+    Button3_29 As button:
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        HoverFill: =ColorFade(RGBA(22, 125, 134, 1), -20%)
+        OnSelect: =Navigate('Feedback Screen')
+        RadiusBottomLeft: =30
+        RadiusBottomRight: =30
+        RadiusTopLeft: =30
+        RadiusTopRight: =30
+        Size: =12
+        Text: ="Feedback"
+        Width: =200
+        X: =15
+        Y: =667
+        ZIndex: =20
+
+    Label20_1 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Size: =20
+        Text: ="Course Name"
+        Width: =197
+        X: =615
+        Y: =250
+        ZIndex: =21
+
+    Label20_36 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Size: =20
+        Text: ="Level"
+        Width: =85
+        X: =969
+        Y: =250
+        ZIndex: =22
+
+    Label20_34 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Size: =20
+        Text: ="Topic"
+        Width: =121
+        X: =391
+        Y: =250
+        ZIndex: =23
+
+    ComboBox3_5 As combobox:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        ChevronBackground: =RGBA(22, 125, 134, 1)
+        DisplayFields: =["Value"]
+        Height: =43
+        InputTextPlaceholder: ="Select Level"
+        Items: =["Newbie","Medium","Advanced"]
+        SearchFields: =["Value"]
+        SearchItems: =Search(["Newbie","Medium","Advanced"],ComboBox3_5.SearchText,Value)
+        SelectMultiple: =false
+        Width: =220
+        X: =557
+        Y: =183
+        ZIndex: =24
+
+    ComboBox5_1 As combobox:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        ChevronBackground: =RGBA(22, 125, 134, 1)
+        DisplayFields: =["Topic"]
+        Height: =45
+        InputTextPlaceholder: ="Select Topic"
+        Items: =Filter(Boost_App_CategoryTopic,Category="Microsoft 365")
+        SearchFields: =["Topic"]
+        SearchItems: =Search(Filter(Boost_App_CategoryTopic,Category="Microsoft 365"),ComboBox5_1.SearchText,Topic)
+        SelectionFill: =RGBA(22, 125, 134, 0.01)
+        SelectMultiple: =false
+        Width: =231
+        X: =270
+        Y: =183
+        ZIndex: =25
+
+    Label20_37 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Size: =20
+        Text: ="OpenDate"
+        Width: =151
+        X: =1054
+        Y: =250
+        ZIndex: =26
+
+    Label20_31 As label:
+        Color: =RGBA(22, 125, 134, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =39
+        Size: =20
+        Text: ="Topic"
+        Width: =121
+        X: =270
+        Y: =141
+        ZIndex: =27
+
+    Label20_32 As label:
+        Color: =RGBA(22, 125, 134, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =39
+        Size: =20
+        Text: ="Level"
+        Width: =121
+        X: =557
+        Y: =141
+        ZIndex: =28
+
+    Label20_33 As label:
+        Color: =RGBA(22, 125, 134, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =39
+        Size: =20
+        Text: ="Language"
+        Width: =154
+        X: =829
+        Y: =141
+        ZIndex: =29
+
+    Label20_35 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Size: =20
+        Text: ="Duration"
+        Width: =141
+        X: =833
+        Y: =250
+        ZIndex: =30
+
+    Image3 As image:
+        Height: =125
+        Image: ='Chanpions of WSS'
+        Width: =127
+        ZIndex: =31
+

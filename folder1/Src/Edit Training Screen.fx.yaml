@@ -1,0 +1,1353 @@
+"'Edit Training Screen' As screen":
+
+    Label1_2 As label:
+        Fill: =RGBA(215, 223, 240, 1)
+        Height: =85
+        Text: =""
+        Width: =1151
+        X: =215
+        Y: =122
+        ZIndex: =1
+
+    Label17_4 As label:
+        Fill: =RGBA(219, 219, 219, 1)
+        Height: =643
+        Text: =""
+        Width: =215
+        Y: =125
+        ZIndex: =2
+
+    Label15_5 As label:
+        Fill: =RGBA(215, 223, 240, 1)
+        Height: =125
+        Text: =""
+        Width: =1366
+        ZIndex: =3
+
+    Label2_5 As label:
+        Color: =RGBA(56, 96, 178, 1)
+        Height: =91
+        Size: =60
+        Text: ="Boost your daily work"
+        Width: =1024
+        X: =215
+        Y: =12
+        ZIndex: =4
+
+    Image3_5 As image:
+        Height: =115
+        Image: =DBschenker
+        Width: =170
+        Y: =7
+        ZIndex: =5
+
+    Label6_15 As label:
+        Align: =Align.Center
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(215, 223, 240, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =65
+        HoverColor: =RGBA(136, 160, 209, 1)
+        HoverFill: =RGBA(241, 244, 249, 1)
+        Size: =20
+        Text: ="Training room"
+        Width: =215
+        Y: =130
+        ZIndex: =6
+
+    Image4_4 As image:
+        Height: =77
+        Image: ='Modern workspace'
+        Width: =95
+        X: =1144
+        Y: =26
+        ZIndex: =7
+
+    Button3_36 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Agility Screen')
+        Size: =12
+        Text: ="Agility Trainings "
+        Width: =200
+        X: =15
+        Y: =279
+        ZIndex: =9
+
+    Button3_35 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Power Platform Screen')
+        Size: =12
+        Text: ="Power Platform  Trainings  "
+        Width: =200
+        X: =15
+        Y: =237
+        ZIndex: =10
+
+    Button3_34 As button:
+        BorderColor: =RGBA(202, 202, 202, 1)
+        BorderStyle: =BorderStyle.None
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Microsoft 365 Screen')
+        Size: =12
+        Text: ="Microsoft 365 Trainings"
+        Width: =200
+        X: =15
+        Y: =195
+        ZIndex: =11
+
+    Label6_16 As label:
+        Align: =Align.Center
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(215, 223, 240, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =65
+        Size: =20
+        Text: ="My Trainings"
+        Width: =215
+        Y: =372
+        ZIndex: =12
+
+    Button3_38 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate ('My Trainings Screen (Attendee)')
+        Size: =12
+        Text: ="Attendee"
+        Width: =200
+        X: =15
+        Y: =437
+        ZIndex: =13
+
+    Button3_40 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Admin Screen')
+        Size: =12
+        Text: ="Admin"
+        Visible: |-
+            =If(
+            
+             Not(IsBlank(LookUp(Boost_App_Admin, User().Email in Admin_Email))),
+            
+            true,
+            
+            false
+            
+            )
+        Width: =200
+        X: =15
+        Y: =521
+        ZIndex: =14
+
+    Button3_39 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        OnSelect: =Navigate('New Training Screen (Trainer)')
+        Size: =12
+        Text: ="Trainer"
+        Visible: |-
+            =If(
+            
+            Not(IsBlank(LookUp(Boost_App_Trainer, User().Email in Trainer_Email)) 
+            ) ||  Not(IsBlank(LookUp(Boost_App_Admin, User().Email in Admin_Email))),
+            
+            true,
+            
+            false
+            
+            )
+        Width: =200
+        X: =15
+        Y: =479
+        ZIndex: =15
+
+    Label6_17 As label:
+        Align: =Align.Center
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(215, 223, 240, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =65
+        Size: =20
+        Text: ="Contact"
+        Width: =215
+        Y: =570
+        ZIndex: =16
+
+    Button3_41 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(237, 237, 237, 1)
+        OnSelect: =Navigate('Feedback Screen')
+        Size: =12
+        Text: ="Feedback"
+        Width: =200
+        X: =15
+        Y: =635
+        ZIndex: =17
+
+    Button1_6 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(215, 223, 240, 1)
+        Height: =53
+        OnSelect: =Navigate('New Training Screen (Trainer)')
+        Text: ="New Training"
+        Width: =184
+        X: =277
+        Y: =153
+        ZIndex: =18
+
+    Button1_7 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =53
+        OnSelect: =Navigate('Edit Training Screen')
+        Text: ="My Trainings"
+        Width: =184
+        X: =565
+        Y: =153
+        ZIndex: =19
+
+    Button1_8 As button:
+        Color: =RGBA(56, 96, 178, 1)
+        Fill: =RGBA(215, 223, 240, 1)
+        Height: =53
+        OnSelect: =Navigate('Contact Participants Screen')
+        Text: ="Contact Participants"
+        Width: =238
+        X: =845
+        Y: =153
+        ZIndex: =20
+
+    Button8_4 As button:
+        DisplayMode: |-
+            =If(DataCardValue22.SelectedDate<=Today() && IsBlank(LookUp(Boost_App_Admin,Admin_Email=User().Email)),DisplayMode.Disabled,DisplayMode.Edit)
+            // 如果开课时间如果不晚于今天且USER不是ADMIN，则此按钮DISABLE
+        Fill: =RGBA(22, 125, 134, 1)
+        Height: =44
+        OnSelect: |+
+            =
+            
+            
+            Patch(Boost_App_Course, LookUp(Boost_App_Course, ID=topicid),{course_name:DataCardValue18.Text,Course_Description:DataCardValue19.Text,Category:Dropdown7.Selected.Value,Topic:Dropdown8.Selected.Topic,Duration:DataCardValue20.Text,Trainer_Email:DataCardValue25.Text,Open_Date:DataCardValue22.SelectedDate,Level:Dropdown6.Selected.Value,Language:Dropdown6_1.Selected.Value,
+            Open_Time:Text(
+                Time(Value(Dropdown9_6.SelectedText.Value), Value(Dropdown9_7.SelectedText.Value),0), DateTimeFormat.LongTime)
+            
+                });
+                //在Boost_App_Course中更新课程信息
+            
+            
+            
+            Set(
+            Starttimevalue1, DataCardValue22.SelectedDate &" "& Time(Value(Dropdown9_6.Selected.Hour), Value(Dropdown9_7.Selected.Minute),0)
+                )  
+            //更新课程时间变量，用于下面更新CALENDAR EVENT 信息
+            ;
+            
+            
+            
+            
+               Office365Outlook.V4CalendarPatchItem(  //更新CALENDAR EVENT 命令
+                       LookUp(Office365Outlook.CalendarGetTables().value, DisplayName = "Calendar" || DisplayName = "日历").Name, //Target Calendar
+                       DataCardValue46.Text,  //要UPDATE的Meeting/EVENT 的ID
+                       DataCardValue18.Text,   // Subject
+                 Text(Starttimevalue1,DateTimeFormat.LongDateTime24),  //STADT TIME
+            Text( DateAdd(Starttimevalue1,Value(DataCardValue20.Text),TimeUnit.Minutes) ,DateTimeFormat.LongDateTime24),  //END TIME
+                       "(UTC+08:00) Beijing, Chongqing, Hong Kong, Urumqi",  //Time Zone
+                       {requiredAttendees:Concat(Filter(Boost_App_Attendee,Meeting_Link=DataCardValue38.Text),Attendee_Email&";"), //Calendar required attendees
+                       body:"<A href=" & DataCardValue38.Text & ">Please click here to join meeting</a>"
+                       }  
+                )
+                       ;
+            
+            Back();
+            
+        Text: ="Submit"
+        Width: =265
+        X: =693
+        Y: =709
+        ZIndex: =24
+
+    Button8_5 As button:
+        Fill: =RGBA(22, 125, 134, 1)
+        Height: =44
+        OnSelect: |-
+            =ResetForm(Form1);
+            Back()
+        Text: ="Cancel"
+        Width: =265
+        X: =1016
+        Y: =709
+        ZIndex: =25
+
+    Form1 As form:
+        DataSource: =Boost_App_Course
+        Height: =511
+        Item: =LookUp( Boost_App_Course , ID = topicid)
+        OnSuccess: |-
+            =Notify("submit success");
+            ResetForm(Form1)
+        Width: =1134
+        X: =223
+        Y: =210
+        ZIndex: =26
+
+        Meeting_Link_DataCard6 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Meeting_Link"
+            Default: =ThisItem.Meeting_Link
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Meeting_Link)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Meeting_Link)
+            Required: =false
+            Update: =DataCardValue38.Text
+            Width: =378
+            X: =1
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey43 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue38 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =DisplayMode.Disabled
+                Height: =73
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey43.Y + DataCardKey43.Height + 5
+                ZIndex: =2
+
+            ErrorMessage30 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue38.Y + DataCardValue38.Height
+                ZIndex: =3
+
+            StarVisible30 As label:
+                Align: =Align.Center
+                Height: =DataCardKey43.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey43.Y
+                ZIndex: =4
+
+        Meeting_ID_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Meeting_ID"
+            Default: =ThisItem.Meeting_ID
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Meeting_ID)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Meeting_ID)
+            Required: =false
+            Update: =DataCardValue46.Text
+            Width: =378
+            X: =2
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey48 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue46 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =DisplayMode.Disabled
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey48.Y + DataCardKey48.Height + 5
+                ZIndex: =2
+
+            ErrorMessage35 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue46.Y + DataCardValue46.Height
+                ZIndex: =3
+
+            StarVisible35 As label:
+                Align: =Align.Center
+                Height: =DataCardKey48.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey48.Y
+                ZIndex: =4
+
+        Category_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Category"
+            Default: =ThisItem.Category
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Category)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =80
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Category)
+            Required: =true
+            Update: =
+            Width: =378
+            X: =0
+            Y: =0
+            ZIndex: =27
+
+            DataCardKey14 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue14 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =40
+                ZIndex: =2
+
+            ErrorMessage2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue14.Y + DataCardValue14.Height
+                ZIndex: =3
+
+            StarVisible2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey14.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey14.Y
+                ZIndex: =4
+
+            Dropdown7 As dropdown:
+                Default: =LookUp(Boost_App_Course,ID=topicid,Category)
+                Items: =Distinct(Boost_App_Course,Category)
+                X: =30
+                Y: =40
+                ZIndex: =5
+
+        Topic_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Topic"
+            Default: =ThisItem.Topic
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Topic)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =90
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Topic)
+            Required: =true
+            Update: =DataCardValue15.Text
+            Width: =378
+            X: =1
+            Y: =0
+            ZIndex: =27
+
+            DataCardKey15 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue15 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey15.Y + DataCardKey15.Height + 5
+                ZIndex: =2
+
+            ErrorMessage3 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue15.Y + DataCardValue15.Height
+                ZIndex: =3
+
+            StarVisible3 As label:
+                Align: =Align.Center
+                Height: =DataCardKey15.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey15.Y
+                ZIndex: =4
+
+            Dropdown8 As dropdown:
+                Default: =LookUp(Boost_App_Course,ID=topicid,Topic)
+                Height: =45
+                Items: =Filter(Boost_App_CategoryTopic, Category = Dropdown7.Selected.Value)
+                X: =30
+                Y: =35
+                ZIndex: =6
+
+        Language_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Language"
+            Default: =ThisItem.Language
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Language)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Language)
+            Required: =true
+            Update: =DataCardValue16.Text
+            Width: =378
+            X: =2
+            Y: =0
+            ZIndex: =27
+
+            DataCardKey16 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue16 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey16.Y + DataCardKey16.Height + 5
+                ZIndex: =2
+
+            ErrorMessage4 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue16.Y + DataCardValue16.Height
+                ZIndex: =3
+
+            StarVisible4 As label:
+                Align: =Align.Center
+                Height: =DataCardKey16.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey16.Y
+                ZIndex: =4
+
+            Dropdown6_1 As dropdown:
+                Default: =LookUp(Boost_App_Course,ID=topicid,Language)
+                Items: =["English", "Chinese","German","Spanish","Others"]
+                X: =25
+                Y: =38
+                ZIndex: =5
+
+        Level_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Level"
+            Default: =ThisItem.Level
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Level)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Level)
+            Required: =true
+            Update: =
+            Width: =378
+            X: =0
+            Y: =1
+            ZIndex: =27
+
+            DataCardKey17 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue17 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey17.Y + DataCardKey17.Height + 5
+                ZIndex: =2
+
+            ErrorMessage5 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue17.Y + DataCardValue17.Height
+                ZIndex: =3
+
+            StarVisible5 As label:
+                Align: =Align.Center
+                Height: =DataCardKey17.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey17.Y
+                ZIndex: =4
+
+            Dropdown6 As dropdown:
+                Default: =LookUp(Boost_App_Course,ID=topicid,Level)
+                Items: =["Newbie","Medium","Advanced"]
+                X: =30
+                Y: =38
+                ZIndex: =5
+
+        course_name_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CourseName"
+            Default: =ThisItem.course_name
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,course_name)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, course_name)
+            Required: =true
+            Update: =DataCardValue18.Text
+            Width: =378
+            X: =1
+            Y: =1
+            ZIndex: =27
+
+            DataCardKey18 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue18 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey18.Y + DataCardKey18.Height + 5
+                ZIndex: =2
+
+            ErrorMessage6 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue18.Y + DataCardValue18.Height
+                ZIndex: =3
+
+            StarVisible6 As label:
+                Align: =Align.Center
+                Height: =DataCardKey18.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey18.Y
+                ZIndex: =4
+
+        Course_Decription_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CourseDecription"
+            Default: =ThisItem.Course_Description
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Course_Description)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Course_Description)
+            Required: =false
+            Update: =DataCardValue19.Text
+            Width: =378
+            X: =2
+            Y: =1
+            ZIndex: =27
+
+            DataCardKey19 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue19 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey19.Y + DataCardKey19.Height + 5
+                ZIndex: =2
+
+            ErrorMessage7 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue19.Y + DataCardValue19.Height
+                ZIndex: =3
+
+            StarVisible7 As label:
+                Align: =Align.Center
+                Height: =DataCardKey19.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey19.Y
+                ZIndex: =4
+
+        Duration_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Duration"
+            Default: =ThisItem.Duration
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Duration)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Duration)
+            Required: =true
+            Update: =DataCardValue20.Text
+            Width: =378
+            X: =0
+            Y: =2
+            ZIndex: =27
+
+            DataCardKey20 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: ="Duration(Minutes)"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue20 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey20.Y + DataCardKey20.Height + 5
+                ZIndex: =2
+
+            ErrorMessage8 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue20.Y + DataCardValue20.Height
+                ZIndex: =3
+
+            StarVisible8 As label:
+                Align: =Align.Center
+                Height: =DataCardKey20.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey20.Y
+                ZIndex: =4
+
+        Trainer_name_DataCard2 As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Trainername"
+            Default: =ThisItem.Trainer_name
+            DisplayMode: =DisplayMode.Disabled
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Trainer_name)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue21.Selected
+            Width: =378
+            X: =1
+            Y: =2
+            ZIndex: =27
+
+            DataCardKey21 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue21 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["DisplayName","Email","Picture"]
+                DisplayMode: =Parent.DisplayMode
+                Items: =Choices([@Boost_App_Course].Trainer_name)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["DisplayName"]
+                SearchItems: =Choices(Boost_App_Course.Trainer_name,DataCardValue21.SearchText)
+                SelectMultiple: =false
+                Template: =ListItemTemplate.Person
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey21.Y + DataCardKey21.Height + 5
+                ZIndex: =2
+
+            ErrorMessage9 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue21.Y + DataCardValue21.Height
+                ZIndex: =3
+
+            StarVisible9 As label:
+                Align: =Align.Center
+                Height: =DataCardKey21.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey21.Y
+                ZIndex: =4
+
+        Open_Date_DataCard2 As typedDataCard.dateEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="OpenDate"
+            Default: =ThisItem.Open_Date
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Open_Date)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =DataCardValue22.SelectedDate
+            Width: =378
+            X: =2
+            Y: =2
+            ZIndex: =27
+
+            DataCardKey22 As label:
+                Height: =33
+                Text: =Parent.DisplayName
+                Width: =111
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue22 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =150
+                X: =30
+                Y: =DataCardKey22.Y + DataCardKey22.Height + 5
+                ZIndex: =2
+
+            ErrorMessage10 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue22.Y + DataCardValue22.Height
+                ZIndex: =3
+
+            StarVisible10 As label:
+                Align: =Align.Center
+                Height: =DataCardKey22.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey22.Y
+                ZIndex: =4
+
+        Open_Time_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="opendate2"
+            Default: =ThisItem.Open_Time
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Open_Time)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Open_Time)
+            Required: =false
+            Update: |-
+                =Text(
+                    Time(Value(Dropdown9_4.SelectedText.Value), Value(Dropdown9_5.SelectedText.Value),0), DateTimeFormat.LongTime
+                    )
+            Width: =378
+            X: =0
+            Y: =3
+            ZIndex: =27
+
+            DataCardKey26 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue26 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =44
+                X: =30
+                Y: =DataCardKey26.Y + DataCardKey26.Height + 5
+                ZIndex: =2
+
+            ErrorMessage14 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue26.Y + DataCardValue26.Height
+                ZIndex: =3
+
+            StarVisible14 As label:
+                Align: =Align.Center
+                Height: =DataCardKey26.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey26.Y
+                ZIndex: =4
+
+            Dropdown9_6 As dropdown:
+                Default: =Text(Hour(Parent.Default),"00")
+                Items: |-
+                    =Table({Hour:"7"},{Hour:"8"},{Hour:"9"}, {Hour:"10"}, {Hour:"11"}, {Hour:"12"}, {Hour:"13"}, {Hour:"14"}, {Hour:"15"}, {Hour:"16"}, {Hour:"17"},{Hour:"18"},{Hour:"19"},{Hour:"20"})
+                Width: =83
+                X: =30
+                Y: =38
+                ZIndex: =5
+
+            Label7_5 As label:
+                Height: =43
+                Text: |-
+                    =":"
+                Width: =20
+                X: =120
+                Y: =38
+                ZIndex: =6
+
+            Dropdown9_7 As dropdown:
+                Default: =Text(Minute(Parent.Default),"00")
+                Items: |-
+                    =Table({Minute:"00"},{Minute:"05"},{Minute:"10"}, {Minute:"15"}, {Minute:"15"},{Minute:"20"}, {Minute:"25"},{Minute:"30"}, {Minute:"35"}, {Minute:"40"}, {Minute:"45"},{Minute:"50"},
+                    {Minute:"55"})
+                Width: =83
+                X: =140
+                Y: =38
+                ZIndex: =7
+
+        Registered_date_DataCard2 As typedDataCard.dateEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Registereddate"
+            Default: =ThisItem.Registered_date
+            DisplayMode: =DisplayMode.Disabled
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Registered_date)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue23.SelectedDate
+            Width: =378
+            X: =1
+            Y: =3
+            ZIndex: =27
+
+            DataCardKey23 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue23 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey23.Y + DataCardKey23.Height + 5
+                ZIndex: =2
+
+            ErrorMessage11 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue23.Y + DataCardValue23.Height
+                ZIndex: =3
+
+            StarVisible11 As label:
+                Align: =Align.Center
+                Height: =DataCardKey23.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey23.Y
+                ZIndex: =4
+
+        Trainer_Email_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Trainername2"
+            Default: =ThisItem.Trainer_Email
+            DisplayMode: =DisplayMode.Disabled
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Trainer_Email)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@Boost_App_Course], DataSourceInfo.MaxLength, Trainer_Email)
+            Required: =true
+            Update: =DataCardValue25.Text
+            Width: =378
+            X: =2
+            Y: =3
+            ZIndex: =27
+
+            DataCardKey25 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue25 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey25.Y + DataCardKey25.Height + 5
+                ZIndex: =2
+
+            ErrorMessage13 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue25.Y + DataCardValue25.Height
+                ZIndex: =3
+
+            StarVisible13 As label:
+                Align: =Align.Center
+                Height: =DataCardKey25.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey25.Y
+                ZIndex: =4
+
+        Attachments_DataCard1 As typedDataCard.attachmentsEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="{Attachments}"
+            Default: =ThisItem.Attachments
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Attachments)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =153
+            Required: =false
+            Update: =DataCardValue27.Attachments
+            Width: =378
+            X: =0
+            Y: =4
+            ZIndex: =27
+
+            DataCardKey27 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue27 As attachments:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisplayMode: =Parent.DisplayMode
+                Height: =81
+                IsInDataCard: =true
+                Items: =Parent.Default
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey27.Y + DataCardKey27.Height + 5
+                ZIndex: =2
+
+            ErrorMessage15 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue27.Y + DataCardValue27.Height
+                ZIndex: =3
+
+            StarVisible15 As label:
+                Align: =Align.Center
+                Height: =DataCardKey27.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey27.Y
+                ZIndex: =4
+

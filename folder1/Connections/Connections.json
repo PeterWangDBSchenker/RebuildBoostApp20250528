@@ -1,0 +1,102 @@
+{
+  "571c29d6-d43f-4e02-b5de-cfafca6a7b45": {
+    "appActions": [
+      "CalendarGetTables_V2",
+      "SendEmailV2",
+      "V4CalendarPostItem"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Outlook",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1677/1.0.1677.3637/office365/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Outlook"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "571c29d6-d43f-4e02-b5de-cfafca6a7b45"
+  },
+  "9de05cd1-ecf4-4ed7-be87-d964de324520": {
+    "appActions": [
+      "providers/PowerPlatform.Governance/Operations/Read",
+      "providers/PowerPlatform.Governance/Operations/Write",
+      "providers/PowerPlatform.Governance/Operations/Delete"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1685/1.0.1685.3700/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://dbschenker.sharepoint.com/sites/steven_test2": {
+        "dataSources": {
+          "Boost_App_Admin": {
+            "tableName": "139f9d93-4d1b-455c-bf4f-11682e199d39"
+          },
+          "Boost_App_Attendee": {
+            "tableName": "e5f288f3-b1cc-471a-ab36-6c0a4cd56520"
+          },
+          "Boost_App_CategoryTopic": {
+            "tableName": "c8c88efe-43f5-477c-b991-e7575e17e986"
+          },
+          "Boost_App_Course": {
+            "tableName": "1903c891-d8e0-418d-bb16-318033a80749"
+          },
+          "Boost_App_Trainer": {
+            "tableName": "c5f9cbf9-57cb-4b13-b292-019f5c57a079"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "Boost_App_Attendee",
+      "Boost_App_Admin",
+      "Boost_App_CategoryTopic",
+      "Boost_App_Course",
+      "Boost_App_Trainer"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "9de05cd1-ecf4-4ed7-be87-d964de324520"
+  },
+  "ba450813-f7f1-4ae0-802d-bbb774fba65d": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Microsoft Teams",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1690/1.0.1690.3719/teams/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_teams",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "MicrosoftTeams"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "ba450813-f7f1-4ae0-802d-bbb774fba65d"
+  },
+  "c3e1b757-29ab-4218-8181-037fb106a875": {
+    "connectionRef": {
+      "displayName": "Office 365 Users",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1677/1.0.1677.3637/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users"
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "c3e1b757-29ab-4218-8181-037fb106a875"
+  }
+}

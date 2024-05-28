@@ -1,0 +1,1062 @@
+"'Course Detail Screen' As screen":
+
+    Rectangle4 As rectangle:
+        Fill: =RGBA(237, 237, 237, 1)
+        Height: =768
+        Width: =1366
+        ZIndex: =1
+
+    Button9 As button:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Color: =RGBA(22, 125, 134, 1)
+        DisplayMode: |-
+            =If( IsBlank( LookUp(Boost_App_Attendee,Course_ID= topicid  && Attendee_Email = User().Email )) && IsBlank(LookUp(Boost_App_Admin,Admin_Email=User().Email))
+            ,DisplayMode.Disabled,DisplayMode.Edit)
+            
+            //如果用户没注册课程且不是ADMIN，此按钮不可用
+        Fill: =RGBA(255,255,255,1)
+        Height: =50
+        HoverColor: =RGBA(255,255,255,1)
+        HoverFill: =RGBA(22, 125, 134, 1)
+        OnSelect: |-
+            =UpdateContext({groupsendemail:true})
+        Text: ="Send Email to Trainer"
+        Width: =200
+        X: =33
+        Y: =298
+        ZIndex: =2
+
+    Button7 As button:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Color: =RGBA(22, 125, 134, 1)
+        DisplayMode: |+
+            =If(DateTimeValue(DataCardValue9.Text)>=Today()  && IsBlank( LookUp(Boost_App_Attendee,Course_ID= topicid  && Attendee_Email = User().Email ) ) ,DisplayMode.Edit, If( 
+                !IsBlank( LookUp(Boost_App_Admin,Admin_Email = User().Email )),DisplayMode.Edit,DisplayMode.Disabled
+            ))
+            // if  course open date earlier than Today, and use has not registered course, and user is not Admin, this button is disabled
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        Fill: =RGBA(255,255,255,1)
+        Height: =50
+        HoverColor: =RGBA(255,255,255,1)
+        HoverFill: =RGBA(22, 125, 134, 1)
+        OnSelect: |+
+            =If( IsBlank( LookUp(Boost_App_Attendee,Course_ID= topicid  && Attendee_Email = User().Email )),  //判断是否已经注册课程，如果是空值没注册，则执行以下命令，否则直接跳出代码尾部的提示
+            
+            
+            
+                
+            
+            Set(Starttimevalue, DataCardValue9.Text & " " & DataCardValue13.Text);   //将课程开始日期时间设为变量用于创建CALENDAR 中EVENT
+            
+            
+            UpdateContext({eventid:   //创建变量eventid用于存储该新建EVENT的ID
+            Office365Outlook.V4CalendarPostItem( //新建EVENT
+                        LookUp(Office365Outlook.CalendarGetTables().value, DisplayName = "Calendar" || DisplayName = "日历").Name,   //定义目标CALENDAR为USER本人的CALENDAR
+                        DataCardValue5.Text,     //CALENDAR SUBJECT
+                        DateTimeValue(Starttimevalue,Language()),   //开始时间
+                        DateAdd(DateTimeValue(Starttimevalue,Language()), Value(DataCardValue7.Text),TimeUnit.Minutes),   //结束时间
+                        "(UTC+08:00) Beijing, Chongqing, Hong Kong, Urumqi",  //TIMEZONE
+                        {requiredAttendees: User().Email,
+                        body: "<A href=" & DataCardValue29.Text & ">Please click here to join meeting</a>" ,
+                        showAs: DataCardValue12.Text        }     //REQUIRET ATTENDEE & content
+            
+                ).id     //对应前面 UpdateContext {eventid}，将该EVENT的id赋值到变量eventid
+            })
+            //按照名称搜索当前ATTENDEE的CALENDAR并创建EVENT，将该EVENT的id导入变量eventid，eventid将用于课程取消 
+                ;
+            
+                Office365Outlook.SendEmailV2( //发送课程注册成功通知邮件给ATTENDEE
+                User().Email,   //recipient
+                "you have registered course"&DataCardValue5.Text,  //subject
+                
+                "Hello, you have registered course"& DataCardValue5.Text &"course will start on " &DataCardValue9.Text & " <A href=" & DataCardValue29.Text & ">Please click here to join meeting</a>"  ,  //content
+                {From:User().Email}   //sender that email from
+            );
+            
+            
+                  Patch(
+                Boost_App_Attendee, Defaults(Boost_App_Attendee), 
+                {Attendee_Email:User().Email,Attendee_Name:User().FullName,Course_Name:DataCardValue5.Text,Course_ID:topicid,Open_Date:DataCardValue9.Text,Category:DataCardValue1.Text,Open_Time:DataCardValue13.Text,Eventid:eventid,Meeting_Link:DataCardValue29.Text,Trainer_Name:DataCardValue8.Selected.DisplayName}  
+                );   //通过 PATCH 命令，将注册课程信息通过新建ITEM保存到 SHAREPOINT 中的 BOOST_APP_ATTENDEE 
+                
+            
+            
+                ,
+                Notify("You have already registed this course before, thanks") //如果IF条件不符合，表示已经注册过此课程，则显示此提示
+            );
+            
+            Navigate('My Trainings Screen (Attendee)')
+            
+        Text: |-
+            ="Register Course
+            "
+        Width: =200
+        X: =34
+        Y: =156
+        ZIndex: =3
+
+    FormViewer1 As formViewer:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        BorderThickness: =1
+        DataSource: =Boost_App_Course
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =598
+        Item: |-
+            =LookUp( Boost_App_Course , ID = topicid || ID=topicid3)
+            //;
+            //AddColumns(
+             //   'Boost_App_Course',
+            ////    "UserPhoto",
+              //  If(
+              //      // check if the the user has an email and a profile picture
+             //       !IsBlank(Trainer_Email.Email)
+             //       And Office365Users.UserPhotoMetadata(AssignedBy.Email).HasPhoto,
+             //       // get the profile picture
+            //       Office365Users.UserPhotoV2(AssignedBy.Email)
+            //    )
+            //
+        Width: =1114
+        X: =252
+        Y: =98
+        ZIndex: =4
+
+        Meeting_Link_DataCard4 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Meeting_Link"
+            Default: =ThisItem.Meeting_Link
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Meeting_Link)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =125
+            Required: =false
+            Visible: =false
+            Width: =371
+            X: =1
+            Y: =5
+            ZIndex: =1
+
+            DataCardKey40 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue29 As label:
+                BorderThickness: =1
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =1
+                Height: =110
+                Overflow: =Overflow.Scroll
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =54
+                ZIndex: =2
+
+        Meeting_ID_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Meeting_ID"
+            Default: =ThisItem.Meeting_ID
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Meeting_ID)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =40
+            Required: =false
+            Visible: =false
+            Width: =371
+            X: =2
+            Y: =5
+            ZIndex: =1
+
+            DataCardKey47 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =11
+                ZIndex: =1
+
+            DataCardValue45 As label:
+                DisplayMode: =Parent.DisplayMode
+                Height: =114
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =59
+                ZIndex: =2
+
+        Course_Name_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CourseName"
+            Default: =ThisItem.course_name
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,course_name)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =85
+            Required: =false
+            Width: =1113
+            X: =0
+            Y: =0
+            ZIndex: =5
+
+            DataCardKey5 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =33
+                Size: =16
+                Text: ="Course Name"
+                Width: =180
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue5 As label:
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =42
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =15
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =40
+                ZIndex: =2
+
+        Course_Decription_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CourseDecription"
+            Default: =ThisItem.Course_Description
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Course_Description)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =85
+            Required: =false
+            Width: =1113
+            X: =0
+            Y: =1
+            ZIndex: =5
+
+            DataCardKey6 As label:
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Size: =16
+                Text: ="Course Description"
+                Width: =286
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue6 As label:
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =39
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =15
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =40
+                ZIndex: =2
+
+        Trainer_name_DataCard1 As typedDataCard.comboBoxViewCard:
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DataField: ="Trainername"
+            Default: =ThisItem.Trainer_name
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Trainer_name)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =129
+            Required: =false
+            Update: =DataCardValue8.Selected
+            Width: =370
+            X: =0
+            Y: =2
+            ZIndex: =5
+
+            DataCardKey8 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =39
+                Size: =16
+                Text: ="Trainer Name"
+                Width: =170
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue8 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["DisplayName","Email","Picture"]
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =31
+                Items: =Choices([@Boost_App_Course].Trainer_name)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["DisplayName"]
+                SearchItems: =Choices(Boost_App_Course.Trainer_name,DataCardValue8.SearchText)
+                SelectMultiple: =false
+                Size: =15
+                Template: =ListItemTemplate.Person
+                Width: =206
+                X: =164
+                Y: =63
+                ZIndex: =2
+
+            ErrorMessage1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue8.Y + DataCardValue8.Height
+                ZIndex: =3
+
+            StarVisible1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey8.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey8.Y
+                ZIndex: =4
+
+            Image1 As image:
+                Height: =82
+                Image: |-
+                    =If(IsBlank(ThisItem.Trainer_Email),DBschenker, Office365Users.UserPhotoV2(ThisItem.Trainer_Email))
+                    //根据次ITEM的TRAINER EMAIL显示头像
+                Width: =113
+                X: =28
+                Y: =43
+                ZIndex: =6
+
+        Topic_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Topic"
+            Default: =ThisItem.Topic
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Topic)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =64
+            Required: =false
+            Width: =371
+            X: =2
+            Y: =2
+            ZIndex: =5
+
+            DataCardKey2 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue2 As label:
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =35
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =15
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =63
+                ZIndex: =2
+
+        Open_Date_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="OpenDate"
+            Default: =ThisItem.Open_Date
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Open_Date)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =127
+            Required: =false
+            Width: =371
+            X: =0
+            Y: =3
+            ZIndex: =5
+
+            DataCardKey9 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =16
+                Text: ="Open Date"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =5
+                ZIndex: =1
+
+            DataCardValue9 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =27
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =16
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =63
+                ZIndex: =2
+
+        open_time_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="opendate2"
+            Default: =ThisItem.Open_Time
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Open_Time)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =40
+            Required: =false
+            Width: =371
+            X: =1
+            Y: =3
+            ZIndex: =5
+
+            DataCardKey13 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =16
+                Text: ="Open Time"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =4
+                ZIndex: =1
+
+            DataCardValue13 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =27
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =15
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =63
+                ZIndex: =2
+
+        Duration_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Duration"
+            Default: =ThisItem.Duration
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Duration)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =40
+            Required: =false
+            Width: =371
+            X: =2
+            Y: =3
+            ZIndex: =5
+
+            DataCardKey7 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =4
+                ZIndex: =1
+
+            DataCardValue7 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =27
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =15
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =63
+                ZIndex: =2
+
+        Level_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Level"
+            Default: =ThisItem.Level
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Level)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Required: =true
+            Width: =371
+            X: =0
+            Y: =4
+            ZIndex: =5
+
+            DataCardKey4 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =4
+                ZIndex: =1
+
+            DataCardValue4 As label:
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =42
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =15
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =59
+                ZIndex: =2
+
+        Language_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Language"
+            Default: =ThisItem.Language
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Language)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Required: =false
+            Width: =371
+            X: =1
+            Y: =4
+            ZIndex: =5
+
+            DataCardKey3 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =4
+                ZIndex: =1
+
+            DataCardValue3 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =42
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =15
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =59
+                ZIndex: =2
+
+        Registered_date_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Registereddate"
+            Default: =ThisItem.Registered_date
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Registered_date)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Required: =false
+            Visible: =false
+            Width: =371
+            X: =2
+            Y: =4
+            ZIndex: =5
+
+            DataCardKey10 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue10 As label:
+                AutoHeight: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =27
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey10.Y + DataCardKey10.Height + 5
+                ZIndex: =2
+
+        "'Trainer name 2_DataCard1' As typedDataCard.textualViewCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Trainername2"
+            Default: =ThisItem.Trainer_Email
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Trainer_Email)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =85
+            Required: =false
+            Visible: =false
+            Width: =371
+            X: =0
+            Y: =5
+            ZIndex: =5
+
+            DataCardKey12 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =9
+                ZIndex: =1
+
+            DataCardValue12 As label:
+                DisplayMode: =Parent.DisplayMode
+                Height: =20
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey12.Y + DataCardKey12.Height + 5
+                ZIndex: =2
+
+        Category_DataCard1 As typedDataCard.textualViewCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Category"
+            Default: =ThisItem.Category
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@Boost_App_Course],DataSourceInfo.DisplayName,Category)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =64
+            Required: =false
+            Width: =371
+            X: =1
+            Y: =2
+            ZIndex: =5
+
+            DataCardKey1 As label:
+                AutoHeight: =true
+                Color: =RGBA(22, 125, 134, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                ZIndex: =1
+
+            DataCardValue1 As label:
+                DisplayMode: =Parent.DisplayMode
+                FontWeight: =FontWeight.Bold
+                Height: =31
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =15
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =63
+                ZIndex: =2
+
+    "'Group deleteconfirmation' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =11
+
+        Rectangle2 As rectangle:
+            Fill: =RGBA(50, 54, 71, 0.62)
+            Height: =768
+            Visible: |-
+                =deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮CANCEL COURSE后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            Width: =1366
+            ZIndex: =5
+
+        Label22 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =119
+            Size: =30
+            Text: ="Is it confirmed to delete this course ?"
+            Visible: |-
+                =deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮CANCEL COURSE后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            Width: =444
+            X: =522
+            Y: =366
+            ZIndex: =6
+
+        Label24 As label:
+            Fill: =Color.White
+            Height: =171
+            Text: =""
+            Visible: |-
+                =deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮CANCEL COURSE后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            Width: =809
+            X: =340
+            Y: =525
+            ZIndex: =7
+
+        Button6 As button:
+            OnSelect: |-
+                = Office365Outlook.SendEmailV2(
+                    Concat(Filter(Boost_App_Attendee,Course_ID=topicid),Attendee_Email & ";") & ";" & LookUp(Boost_App_Course,ID=topicid,Trainer_Email),
+                    "your course "& DataCardValue5.Text & " was canceled",
+                    "Hello, please beware that your registered course "& DataCardValue5.Text &" which start on " &DataCardValue9.Text & " was canceled"  ,
+                    {From:User().Email}
+                )
+                
+                // 发送通知邮件给所有ATTENDEE以及TRAINER，课程被删除； 
+                ;
+                
+                Office365Outlook.CalendarDeleteItemV2(
+                   LookUp(Office365Outlook.CalendarGetTables().value, DisplayName = "Calendar" || DisplayName = "日历").Name,LookUp(Boost_App_Course,ID=topicid,Meeting_ID));
+                
+                //删除CALENDAR中的EVENT
+                
+                RemoveIf(Boost_App_Course,Meeting_Link=DataCardValue29.Text);
+                //删除Boost_App_Course中的此课程
+                
+                UpdateContext({deleteconfirmation:false}); //变量重新定义为FALSE，隐藏此GROUP
+                
+                Back()
+                
+                //SHAREPOINT LIST中删除掉课程，并且在TRAINER的CALENDAR中删除此课程
+            Text: ="Yes"
+            Visible: |-
+                =deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮CANCEL COURSE后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            X: =487
+            Y: =595
+            ZIndex: =8
+
+        Button6_2 As button:
+            OnSelect: |-
+                =UpdateContext({deleteconfirmation:false})
+            Text: ="No"
+            Visible: |-
+                =deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮CANCEL COURSE后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            X: =841
+            Y: =595
+            ZIndex: =9
+
+    Button11 As button:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Color: =RGBA(22, 125, 134, 1)
+        DisplayMode: |-
+            =If( 
+                IsBlank( LookUp(Boost_App_Attendee,Course_ID= topicid  && Attendee_Email = User().Email )),DisplayMode.Disabled,DisplayMode.Edit
+            
+            
+            )
+        Fill: =RGBA(255,255,255,1)
+        Height: =50
+        HoverColor: =RGBA(255,255,255,1)
+        HoverFill: =RGBA(22, 125, 134, 1)
+        OnSelect: |-
+            =
+            
+            
+            
+            Office365Outlook.CalendarDeleteItemV2(
+               LookUp(Office365Outlook.CalendarGetTables().value, DisplayName = "Calendar" || DisplayName = "日历").Name,LookUp(Boost_App_Attendee,Course_ID=topicid,Eventid));
+               
+            RemoveIf(Boost_App_Attendee,Course_ID=topicid && Attendee_Email=User().Email);
+            
+            
+            
+            
+            
+            
+            Back()
+                        
+        Text: ="Cancel Registration"
+        Width: =200
+        X: =34
+        Y: =227
+        ZIndex: =14
+
+    Button7_1 As button:
+        DisplayMode: |+
+            =If(DateTimeValue(DataCardValue9.Text)>=Today()  && IsBlank( LookUp(Boost_App_Attendee,Course_ID= topicid  && Attendee_Email = User().Email ) ) ,DisplayMode.Edit, If( 
+                !IsBlank( LookUp(Boost_App_Admin,Admin_Email = User().Email )),DisplayMode.Edit,DisplayMode.Disabled
+            ))
+            // if  course open date earlier than Today, and use has not registered course, and user is not Admin, this button is disabled
+            
+        Fill: =RGBA(127, 178, 57, 1)
+        Height: =44
+        OnSelect: |
+            =If( IsBlank( LookUp(Boost_App_Attendee,Course_ID= topicid  && Attendee_Email = User().Email )),  //判断是否已经注册课程，如果是空值没注册，则执行以下命令，否则直接跳出代码尾部的提示
+            
+            
+            
+                
+            Set(Starttimevalue, DataCardValue9.Text & " " & DataCardValue13.Text);   //将课程开始日期时间设为变量用于创建CALENDAR 中EVENT
+            
+             
+                
+            
+            Office365Outlook.V4CalendarPatchItem(  //更新CALENDAR EVENT 命令
+                       LookUp(Office365Outlook.CalendarGetTables().value, DisplayName = "Calendar" || DisplayName = "日历").Name, //Target Calendar
+                       DataCardValue45.Text,  //要UPDATE的Meeting/EVENT 的ID
+                       DataCardValue5.Text,   // Calendar Subject
+                       Text(Starttimevalue,DateTimeFormat.LongDateTime24), //STADT TIME
+                       Text(DateAdd(Starttimevalue,Value(DataCardValue7.Text),TimeUnit.Minutes) ,DateTimeFormat.LongDateTime24),  //END TIME
+                       "(UTC+08:00) Beijing, Chongqing, Hong Kong, Urumqi",  //Time Zone
+                       {requiredAttendees:Concat(Filter(Boost_App_Attendee,Meeting_Link=DataCardValue29.Text),Attendee_Email&";"),
+                        body:"<A href=" & DataCardValue29.Text & ">Please click here to join meeting</a>"
+                        }  //Calendar required attendees and  content
+                )
+                       ;
+            
+            
+            
+            
+                Office365Outlook.SendEmailV2( //发送课程注册成功通知邮件给ATTENDEE
+                User().Email,   //recipient
+                "you have registered course"&DataCardValue5.Text,  //subject
+                "Hello, you have registered course"& DataCardValue5.Text &"course will start on " &DataCardValue9.Text & " <A href=" & DataCardValue29.Text & ">Please click here to join meeting</a>" ,  
+                //content
+                {From:User().Email}   //sender that email from
+            );
+            
+            
+               Patch(
+                Boost_App_Attendee, Defaults(Boost_App_Attendee), 
+                {Attendee_Email:User().Email,Attendee_Name:User().FullName,Course_Name:DataCardValue5.Text,Course_ID:topicid,Open_Date:DataCardValue9.Text,Category:DataCardValue1.Text,Open_Time:DataCardValue13.Text,Eventid:DataCardValue45.Text,Meeting_Link:DataCardValue29.Text,Trainer_Name:DataCardValue8.Selected.DisplayName}  
+                ); //通过 PATCH 命令，将注册课程信息通过新建ITEM保存到 SHAREPOINT 中的 BOOST_APP_ATTENDEE 列表
+            
+            
+                ,
+                Notify("You have already registed this course before, thanks") //如果IF条件不符合，表示已经注册过此课程，则显示此提示
+            );
+            
+            Navigate('My Trainings Screen (Attendee)')
+        Text: |-
+            ="Register Course Test
+            "
+        Width: =239
+        X: =1127
+        Y: =724
+        ZIndex: =15
+
+    Button6_5 As button:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(255,255,255,1)
+        Height: =50
+        HoverColor: =RGBA(255,255,255,1)
+        HoverFill: =RGBA(22, 125, 134, 1)
+        OnSelect: |-
+            =Back();
+            Set(topicid,0);
+            Set(topicid3,0)  //暂时不确定变量topid3是否有用，暂时先保留此句 实际上没有效果
+        Text: ="Back"
+        Width: =200
+        X: =33
+        Y: =595
+        ZIndex: =16
+
+    "'Group send email' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =16
+
+        Rectangle3 As rectangle:
+            BorderColor: =RGBA(56, 96, 178, 0.3)
+            Fill: =RGBA(56, 96, 178, 0.42)
+            Height: =768
+            Visible: |-
+                =groupsendemail
+                //deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮Send Email to Trainer后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            Width: =1366
+            ZIndex: =10
+
+        TextInput4 As text:
+            Default: =
+            Height: =346
+            HintText: ="Please input your message that you want send to Trainer here"
+            Mode: =TextMode.MultiLine
+            Visible: |-
+                =groupsendemail
+                //deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮Send Email to Trainer后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            Width: =909
+            X: =198
+            Y: =120
+            ZIndex: =11
+
+        Button10 As button:
+            Fill: =RGBA(109, 49, 162, 1)
+            OnSelect: |
+                =Office365Outlook.SendEmailV2(
+                    DataCardValue12.Text,
+                    "here is Attendee meesage from who registered "&DataCardValue5.Text,
+                    TextInput4.Text,
+                    {From:User().Email}
+                )
+                //发送EMAIL给TRAINER
+                
+                ;
+                UpdateContext({groupsendemail:false}); //变量值改为FALSE用于隐藏此GROUP
+            Text: ="Send"
+            Visible: |-
+                =groupsendemail
+                //deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮Send Email to Trainer后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            X: =770
+            Y: =466
+            ZIndex: =12
+
+        Button10_1 As button:
+            Fill: =RGBA(109, 49, 162, 1)
+            OnSelect: |-
+                =UpdateContext({groupsendemail:false})
+                //变量值改为FALSE用于隐藏此GROUP
+            Text: ="Cancel"
+            Visible: |-
+                =groupsendemail
+                //deleteconfirmation 
+                //变量默认FALSE 隐藏该GROUP，点击按钮Send Email to Trainer后变为TRUE，GROUP中还有部分按钮用于改变此变量来显示/隐藏此GROUP
+            X: =947
+            Y: =466
+            ZIndex: =13
+
+    Label15_13 As label:
+        Fill: =RGBA(22, 125, 134, 1)
+        Height: =100
+        Text: =""
+        Width: =1366
+        ZIndex: =17
+
+    Label2_13 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =79
+        Size: =50
+        Text: ="Course Details"
+        Width: =647
+        X: =430
+        Y: =11
+        ZIndex: =18
+
+    Button4 As button:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(255,255,255,1)
+        Height: =50
+        HoverColor: =RGBA(255,255,255,1)
+        HoverFill: =RGBA(22, 125, 134, 1)
+        OnSelect: |-
+            =UpdateContext({deleteconfirmation:true})
+        Text: ="Delete Course"
+        Visible: |-
+            =If(!IsBlank(Filter(Boost_App_Admin,Admin_Email=User().Email)) || !IsBlank(Filter(Boost_App_Course,Trainer_Email=User().Email && ID=topicid)),true,false)
+            //此按钮，只有ADMIN或者课程本身TRAINER可以看到，否则对其隐藏
+        Width: =199
+        X: =33
+        Y: =485
+        ZIndex: =19
+
+    Button6_4 As button:
+        BorderColor: =RGBA(22, 125, 134, 1)
+        Color: =RGBA(22, 125, 134, 1)
+        Fill: =RGBA(255,255,255,1)
+        Height: =50
+        HoverColor: =RGBA(255,255,255,1)
+        HoverFill: =RGBA(22, 125, 134, 1)
+        OnSelect: |-
+            =//Set(topicid,LookUp(Boost_App_Course,Meeting_Link=DataCardValue29.Text,ID)) ; 
+            Navigate('Edit Training Screen',ScreenTransition.CoverRight)
+        Text: ="Edit"
+        Visible: |-
+            =If(!IsBlank(Filter(Boost_App_Admin,Admin_Email=User().Email)) || !IsBlank(Filter(Boost_App_Course,Trainer_Email=User().Email && ID=topicid)),true,false)
+            //此按钮，只有ADMIN或者课程本身TRAINER可以看到，否则对其隐藏
+        Width: =199
+        X: =33
+        Y: =426
+        ZIndex: =20
+

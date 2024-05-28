@@ -1,0 +1,20 @@
+App As appinfo:
+    BackEnabled: =true
+    OnStart: |-
+        =Set(Currentuser, User().Email);
+        
+        Set(WSSNanjing,"peter.p.wang@DBschenker.com; Steven.wang@DBschenker.com; Kris.zhang@DBschenker.com");
+        
+        
+        Set(calendarid,LookUp(Office365Outlook.CalendarGetTablesV2().value, name="Calendar" || name="日历"  ).id);
+        
+        Set(calendarname,LookUp(Office365Outlook.CalendarGetTablesV2().value,name="Calendar" || name="日历" ).name)
+    Theme: =PowerAppsTheme
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
+
