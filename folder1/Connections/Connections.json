@@ -1,0 +1,44 @@
+{
+  "9de05cd1-ecf4-4ed7-be87-d964de324520": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1685/1.0.1685.3700/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://dbschenker.sharepoint.com/sites/steven_test2": {
+        "dataSources": {
+          "Boost_App_Admin": {
+            "tableName": "139f9d93-4d1b-455c-bf4f-11682e199d39"
+          },
+          "Boost_App_Attendee": {
+            "tableName": "e5f288f3-b1cc-471a-ab36-6c0a4cd56520"
+          },
+          "Boost_App_CategoryTopic": {
+            "tableName": "c8c88efe-43f5-477c-b991-e7575e17e986"
+          },
+          "Boost_App_Course": {
+            "tableName": "1903c891-d8e0-418d-bb16-318033a80749"
+          },
+          "Boost_App_Trainer": {
+            "tableName": "c5f9cbf9-57cb-4b13-b292-019f5c57a079"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "Boost_App_Attendee",
+      "Boost_App_Admin",
+      "Boost_App_CategoryTopic",
+      "Boost_App_Course",
+      "Boost_App_Trainer"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "9de05cd1-ecf4-4ed7-be87-d964de324520"
+  }
+}
